@@ -48,6 +48,9 @@ import org.lineageos.glimpse.utils.PickerUtils
 import org.lineageos.glimpse.viewmodels.AlbumViewerViewModel
 import org.lineageos.glimpse.viewmodels.QueryResult
 
+private const val DUPLICATE_MEDIA_PROVIDED =
+    "More than one media provided when only one was requested"
+
 /**
  * A fragment showing a list of media from a specific album with thumbnails.
  * Use the [MediaSelectorFragment.newInstance] factory method to
@@ -271,7 +274,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
                         }
                     } else {
                         require(medias.size == 1) {
-                            "More than one media provided when only one was requested"
+                            DUPLICATE_MEDIA_PROVIDED
                         }
 
                         data = medias.first().uri
@@ -283,7 +286,7 @@ class MediaSelectorFragment : Fragment(R.layout.fragment_picker_media_selector) 
 
             Intent.ACTION_SET_WALLPAPER -> {
                 require(medias.size == 1) {
-                    "More than one media provided when only one was requested"
+                    DUPLICATE_MEDIA_PROVIDED
                 }
 
                 runCatching {

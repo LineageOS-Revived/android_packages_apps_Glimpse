@@ -141,7 +141,7 @@ class MediaFlow(
         val dateModified = it.getLong(indexCache[i++])
         val width = it.getInt(indexCache[i++])
         val height = it.getInt(indexCache[i++])
-        val orientation = it.getInt(indexCache[i++])
+        val orientation = it.getInt(indexCache[i])
 
         MediaStoreMedia.fromMediaStore(
             id,

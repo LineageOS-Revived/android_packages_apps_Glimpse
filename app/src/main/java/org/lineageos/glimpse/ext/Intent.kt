@@ -10,6 +10,10 @@ import org.lineageos.glimpse.models.Media
 import org.lineageos.glimpse.models.MediaType.IMAGE
 import org.lineageos.glimpse.models.MediaType.VIDEO
 
+private const val IMAGE_ALL = "image/*"
+private const val VIDEO_ALL = "video/*"
+private const val ALL = "*/*"
+
 fun buildShareIntent(vararg medias: Media) = Intent().apply {
     assert(medias.isNotEmpty()) { "No media" }
 
@@ -26,11 +30,11 @@ fun buildShareIntent(vararg medias: Media) = Intent().apply {
             medias.map { it.uri }.toCollection(ArrayList())
         )
         type = when {
-            medias.all { it.mediaType == IMAGE } -> "image/*"
-            medias.all { it.mediaType == VIDEO } -> "video/*"
+            medias.all { it.mediaType == IMAGE } -> IMAGE_ALL
+            medias.all { it.mediaType == VIDEO } -> VIDEO_ALL
             else -> {
-                putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
-                "*/*"
+                putExtra(Intent.EXTRA_MIME_TYPES, arrayOf(IMAGE_ALL, VIDEO_ALL))
+                ALL
             }
         }
     }

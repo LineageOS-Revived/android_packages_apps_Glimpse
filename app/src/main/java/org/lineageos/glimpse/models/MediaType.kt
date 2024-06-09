@@ -8,6 +8,9 @@ package org.lineageos.glimpse.models
 import android.net.Uri
 import android.provider.MediaStore
 
+private const val VIDEO_FOLDER = "video/"
+private val IMAGE_FOLDER = "image/"
+
 enum class MediaType(
     val externalContentUri: Uri,
     val mediaStoreValue: Int,
@@ -41,13 +44,15 @@ enum class MediaType(
             value == it.mediaStoreValue
         }
 
-        fun fromMimeType(mimeType: String) = when {
-            mimeType.startsWith("image/") -> IMAGE
-            mimeType.startsWith("video/") -> VIDEO
-            mimeType in dashMimeTypes -> VIDEO
-            mimeType in hlsMimeTypes -> VIDEO
-            mimeType in smoothStreamingMimeTypes -> VIDEO
-            else -> null
+        fun fromMimeType(mimeType: String): MediaType? {
+            return when {
+                mimeType.startsWith(IMAGE_FOLDER) -> IMAGE
+                mimeType.startsWith(VIDEO_FOLDER) -> VIDEO
+                mimeType in dashMimeTypes -> VIDEO
+                mimeType in hlsMimeTypes -> VIDEO
+                mimeType in smoothStreamingMimeTypes -> VIDEO
+                else -> null
+            }
         }
     }
 }
