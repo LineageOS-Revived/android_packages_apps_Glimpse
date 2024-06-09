@@ -219,9 +219,13 @@ class MediaInfoBottomSheetDialog(
 
             val contentResolver = activity.contentResolver
 
-            editDescriptionCallback.launch(
-                contentResolver.createWriteRequest(media.uri)
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                editDescriptionCallback.launch(
+                    contentResolver.createWriteRequest(media.uri)
+                )
+            } else {
+                editDescription(media, description)
+            }
         }
 
         private fun editDescription(media: MediaStoreMedia, description: String) {

@@ -8,6 +8,7 @@ package org.lineageos.glimpse.flow
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.core.os.bundleOf
@@ -92,15 +93,16 @@ class MediaFlow(
                     ContentResolver.QUERY_ARG_SQL_SORT_ORDER to sortOrder,
                 )
             )
-
             // Exclude trashed media unless we want data for the trashed album
-            putInt(
-                MediaStore.QUERY_ARG_MATCH_TRASHED, when (bucketId) {
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> MediaStore.MATCH_ONLY
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                putInt(
+                    MediaStore.QUERY_ARG_MATCH_TRASHED, when (bucketId) {
+                        MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> MediaStore.MATCH_ONLY
 
-                    else -> MediaStore.MATCH_EXCLUDE
-                }
-            )
+                        else -> MediaStore.MATCH_EXCLUDE
+                    }
+                )
+            }
         }
 
         return context.contentResolver.queryFlow(

@@ -93,13 +93,15 @@ class AlbumFlow(
             )
 
             // Exclude trashed media unless we want data for the trashed album
-            putInt(
-                MediaStore.QUERY_ARG_MATCH_TRASHED, when (bucketId) {
-                    MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> MediaStore.MATCH_ONLY
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                putInt(
+                    MediaStore.QUERY_ARG_MATCH_TRASHED, when (bucketId) {
+                        MediaStoreBuckets.MEDIA_STORE_BUCKET_TRASH.id -> MediaStore.MATCH_ONLY
 
-                    else -> MediaStore.MATCH_EXCLUDE
-                }
-            )
+                        else -> MediaStore.MATCH_EXCLUDE
+                    }
+                )
+            }
         }
 
         return context.contentResolver.queryFlow(
