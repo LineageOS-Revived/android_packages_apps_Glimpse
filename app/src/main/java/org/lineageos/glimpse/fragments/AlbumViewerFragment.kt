@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -335,14 +335,7 @@ class AlbumViewerFragment : Fragment(R.layout.fragment_album_viewer) {
         recyclerView.adapter = thumbnailAdapter
 
         ViewCompat.setOnApplyWindowInsetsListener(view) { _, windowInsets ->
-            val insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
-            )
-
-            toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = insets.left
-                rightMargin = insets.right
-            }
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             recyclerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = insets.left
